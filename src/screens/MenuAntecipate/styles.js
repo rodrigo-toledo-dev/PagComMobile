@@ -1,33 +1,39 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    height: '100%'
-  },
 
   mainView: {
     flexDirection: "column",
     flex: 1,
     alignContent: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     paddingTop: 10,
   },
-
-
 
   mainBalanceView: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     height: 100,
-    marginBottom: 20,
+    marginBottom: 10,
     marginLeft: 10,
     marginRight: 10,
   },
 
   balanceView: {
     flex: 1
+  },
+
+  checkBox: {
+    marginTop: 20
+  },
+
+  checkBoxTextGray: {
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 20,
+    color: "#808080",
+    fontSize: 15
   },
 
   scanOptionsView: {
@@ -55,15 +61,28 @@ export default StyleSheet.create({
     color: "#808080"
   },
 
-  buttonContainer: {
-    width: 150,
-  },
-  buttonText: {
+  textBlueBrl: {
+    marginBottom: 10,
+    marginLeft: 20,
+    marginRight: 20,
     textAlign: "center",
-    color: "#FFFFFF",
-    fontWeight: "700",
-    fontSize: 17
+    fontSize: 20,
+    color: "#1d6c98",
+    fontWeight: "bold"
   },
+
+  contentViewRow: {
+    height: 170,
+    flexDirection: "row",
+    flex: 1,
+    alignContent: 'center',
+    justifyContent: 'center',
+  },
+
+  footerButtonContainer: {
+    width: 160,
+  },
+
   contentMenuView: {
     flexDirection: "row",
     flex: 1,
@@ -75,12 +94,6 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: "center"
   },
-
-  transactionsView: {
-    marginTop: 20,
-    height: '50%',
-  },
-
   transactionsTitleText:{
     textAlign: 'center',
     marginTop: 50,
@@ -89,8 +102,10 @@ export default StyleSheet.create({
   },
 
   iconMenu: {
-    width: 115,
-    height: 115
+    width: 80,
+    height: 80,
+    alignSelf: 'center',
+    marginBottom: 10,
   },
 
   tabBackground: {
@@ -176,5 +191,70 @@ export default StyleSheet.create({
     letterSpacing: 0,
     textAlign: "left",
     color: "#FFFFFF"
+  },
+
+  input: {
+    flex: 1,
+    height: 44,
+    color: "#808080",
+    borderColor: "#808080",
+    borderTopWidth: 3,
+    borderLeftWidth: 3,
+    borderRightWidth: 3,
+    borderBottomWidth: 3,
+    marginBottom: 10,
+    marginLeft: 20,
+    marginRight: 20,
+    paddingLeft: 5,
+    paddingRight: 5,
+    fontSize: 17
+  },
+
+  inputDescription: {
+    flex: 1,
+    height: 160,
+    color: "#808080",
+    borderColor: "#808080",
+    borderTopWidth: 3,
+    borderLeftWidth: 3,
+    borderRightWidth: 3,
+    borderBottomWidth: 3,
+    marginBottom: 10,
+    marginLeft: 20,
+    marginRight: 20,
+    paddingLeft: 5,
+    paddingRight: 5,
+    fontSize: 17
+  },
+
+  buttonContainer: {
+    marginLeft: 28,
+    marginRight: 28,
+    borderRadius: 5,
+    height: 46,
+    marginTop: 10,
+    marginBottom: 5,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: '#1a638d'
+  },
+  buttonText: {
+    textAlign: "center",
+    color: "#FFFFFF",
+    fontWeight: "700",
+    fontSize: 17
+  },
+  buttonKeyboard: {
+    height: 40,
+    width: 80,
+    resizeMode: "stretch"
+  },
+  buttonViewRow: {
+    alignSelf: 'center',
+    flexDirection: "row",
+    marginTop: 0,
+    marginBottom: 0,
+    marginLeft: 0,
+    marginRight: 0
   }
 });

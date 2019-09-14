@@ -185,6 +185,15 @@ export default StyleSheet.create({
     color: "#808080"
   },
 
+  textGrayBold: {
+    marginTop: 10,
+    marginLeft: 20,
+    marginRight: 20,
+    color: "#808080",
+    fontSize: 17,
+    fontWeight: 'bold'
+  },
+
   indicator: {
     marginBottom: 10,
   },
