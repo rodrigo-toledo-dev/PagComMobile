@@ -14,8 +14,12 @@ import generalStyles from '../../generalStyles';
 
 export default function QrCodePaymentScreen({ navigation }) {
   let [show, setShow] = useState(false);
+  let [id, setId] = useState('');
   let [email, setEmail] = useState('');
+  let [username, setUserName] = useState('');
   let [money, setMoney] = useState('');
+  let [balance, setBalance] = useState('');
+  let [transferTo, setTransferTo] = useState('');
 
   calcButton = (value) => {
     setMoney(money+value);
@@ -58,27 +62,15 @@ export default function QrCodePaymentScreen({ navigation }) {
     }
   }
 
-  // componentDidMount = () => {
-  //   try {
-  //     AsyncStorage.getItem('token').then( token => {
-  //       const url = constantsAPI.BASE_URL + constantsAPI.GET_BALANCE;
-  //       const headers = { headers: { Authorization: `Bearer ${token}` } };
+  useEffect(() => {
+    AsyncStorage.getItem("id").then(value => {
+      setTransferTo({ id: value });
+    });
 
-  //       await api.get(url, headers).then( response => {
-  //         let { balance } = response.data
-  //         balance = MaskService.toMask('money', parseFloat(balance), {
-  //           unit: 'R$',
-  //           separator: ',',
-  //           delimiter: '.',
-  //         });
-
-  //         this.setState({ balance });
-  //       });
-  //     });
-  //   } catch (error) {
-  //     console.tron.log(error);
-  //   }
-  // }
+    AsyncStorage.getItem("username").then(value => {
+      setUserName(value)
+    });
+  }, []);
 
   return (
     <View style={generalStyles.container}>
@@ -102,6 +94,32 @@ export default function QrCodePaymentScreen({ navigation }) {
             </Text>
             <View style={styles.contentViewBgCodeWhite}>
 
+            </View>
+          </View>
+        </View>
+
+        <View style={styles.contentViewBgWhite}>
+          <Text style={styles.textGrayBold}>Meu código QR</Text>
+          <Text style={styles.textGray}>{username}</Text>
+
+          <View style={styles.contentViewRow}>
+            <View style={styles.contentViewBgQRCode}>
+              <View style={{width: 270, height: 270}}></View>
+            </View>
+            <View style={styles.contentViewBgCode}>
+            </View>
+          </View>
+
+          <View style={styles.contentViewBalance}>
+            <Text style={styles.textGrayBottom}>Seu saldo no</Text>
+            <Image
+              style={styles.logoBottom}
+              source={require("../../images/ic_logo_home.png")}
+            />
+            <View>
+              <Text style={styles.textGrayBoldBottom}>
+                {balance}
+              </Text>
             </View>
           </View>
         </View>

@@ -51,10 +51,28 @@ export default function LoginScreen({ navigation }) {
             setShow(false)
             Alert.alert("Atenção", "Email ou senha incorretos");
           } else {
-            AsyncStorage.setItem("id", String(response.id));
-            AsyncStorage.setItem("token", response.token);
-            AsyncStorage.setItem("username", response.username);
-            AsyncStorage.setItem("balance", response.balance);
+            let id = JSON.stringify(response.id);
+            id = id.replace(/"/g, "");
+
+            let token = JSON.stringify(response.token);
+            token = token.replace(/"/g, "");
+
+            let username = JSON.stringify(response.username);
+            username = username.replace(/"/g, "");
+
+            let balance = JSON.stringify(response.balance);
+            balance = balance.replace(/"/g, "");
+
+            AsyncStorage.setItem("id", id);
+            AsyncStorage.setItem("token", token);
+            AsyncStorage.setItem("username", username);
+            AsyncStorage.setItem("balance", balance);
+
+
+            // AsyncStorage.setItem("id", String(response.id));
+            // AsyncStorage.setItem("token", response.token);
+            // AsyncStorage.setItem("username", response.username);
+            // AsyncStorage.setItem("balance", response.balance);
             navigation.navigate('Home');
           }
         })
