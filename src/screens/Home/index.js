@@ -54,6 +54,11 @@ export default function HomeScreen({ navigation }) {
     navigation.navigate('QrCodePayment')
   }
 
+  async function menuOptions(){
+    console.tron.log('Indo para MenuOptions')
+    navigation.navigate('MenuOptions')
+  }
+
   // componentDidMount() {
   //   try {
   //     AsyncStorage.getItem('token').then( token => {
@@ -92,7 +97,7 @@ export default function HomeScreen({ navigation }) {
               />
             </TouchableOpacity>
 
-            <TouchableOpacity>
+            <TouchableOpacity onPress={menuOptions}>
               <Image
                 source={require('../../images/home/icon_right_three.png')}
                 style={styles.iconRight}
