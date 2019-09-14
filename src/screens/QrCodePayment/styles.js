@@ -62,7 +62,7 @@ export default StyleSheet.create({
   contentViewRow: {
     flexDirection: "column",
     justifyContent: 'center',
-    padding: 40,
+    padding: 30,
   },
 
   contentViewBgBlue: {
@@ -83,7 +83,7 @@ export default StyleSheet.create({
   contentViewBgCodeWhite: {
     backgroundColor: '#FFF',
     width: '100%',
-    height: 320
+    height: 330
   },
 
   textWhiteBold: {
