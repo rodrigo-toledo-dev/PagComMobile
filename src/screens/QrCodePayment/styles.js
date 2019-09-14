@@ -60,15 +60,18 @@ export default StyleSheet.create({
   },
 
   contentViewRow: {
-    height: 170,
-    flexDirection: "row",
-    flex: 1,
-    alignContent: 'center',
+    flexDirection: "column",
     justifyContent: 'center',
+    padding: 40,
   },
 
-  footerButtonContainer: {
-    width: 160,
+  contentViewBgBlue: {
+    marginTop: 10,
+    backgroundColor: "#1e6b95",
+    height: 450,
+    borderRadius: 10,
+    marginLeft: 5,
+    marginRight: 5,
   },
 
   contentMenuView: {
@@ -76,6 +79,26 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: "center"
   },
+
+  contentViewBgCodeWhite: {
+    backgroundColor: '#FFF',
+    width: '100%',
+    height: 320
+  },
+
+  textWhiteBold: {
+    marginBottom: 20,
+    textAlign: "center",
+    fontSize: 15,
+    color: "#FFFFFF",
+    fontWeight: "bold"
+  },
+
+  footerButtonContainer: {
+    width: 160,
+  },
+
+
 
   topTransactionsView: {
     height: 100,

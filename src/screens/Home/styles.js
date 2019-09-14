@@ -56,7 +56,7 @@ export default StyleSheet.create({
   },
 
   buttonContainer: {
-    width: 100,
+    width: 170,
   },
   buttonText: {
     textAlign: "center",
