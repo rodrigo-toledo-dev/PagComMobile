@@ -36,6 +36,12 @@ export default StyleSheet.create({
     marginBottom: 5,
     resizeMode: "contain",
   },
+  logoBottom: {
+    resizeMode: "stretch",
+    width: 60,
+    height: 30,
+    marginLeft: 10
+  },
   textValue: {
     textAlign: "center",
     fontSize: 26,
@@ -62,7 +68,7 @@ export default StyleSheet.create({
   contentViewRow: {
     flexDirection: "column",
     justifyContent: 'center',
-    padding: 40,
+    padding: 30,
   },
 
   contentViewBgBlue: {
@@ -74,6 +80,29 @@ export default StyleSheet.create({
     marginRight: 5,
   },
 
+  contentViewBgWhite: {
+    marginTop: 10,
+    height: 650,
+    borderRadius: 10,
+    marginLeft: 5,
+    marginRight: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  contentViewBgQRCode: {
+    height: 350,
+    width: 350,
+    marginLeft: 40,
+    marginRight: 40,
+    marginTop: 40,
+    marginBottom: 5
+  },
+
+  contentViewBalance: {
+    flexDirection: "row",
+  },
+
   contentMenuView: {
     flexDirection: "row",
     flex: 1,
@@ -83,7 +112,7 @@ export default StyleSheet.create({
   contentViewBgCodeWhite: {
     backgroundColor: '#FFF',
     width: '100%',
-    height: 320
+    height: 330
   },
 
   textWhiteBold: {
