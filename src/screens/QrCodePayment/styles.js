@@ -65,6 +65,21 @@ export default StyleSheet.create({
     fontWeight: "bold"
   },
 
+  textGrayBold: {
+    marginTop: 20,
+    marginLeft: 20,
+    marginRight: 20,
+    textAlign: "center",
+    fontSize: 15,
+    color: "#808080",
+    fontWeight: "bold"
+  },
+
+  textGrayBoldBottom: {
+    color: "#808080",
+    fontWeight: "bold"
+  },
+
   contentViewRow: {
     flexDirection: "column",
     justifyContent: 'center',
@@ -80,23 +95,42 @@ export default StyleSheet.create({
     marginRight: 5,
   },
 
+  contentViewQrCode: {
+    marginLeft: 5,
+    marginRight: 5,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: "#1e6b95",
+    marginTop: 10,
+  },
+
   contentViewBgWhite: {
     marginTop: 10,
-    height: 650,
     borderRadius: 10,
     marginLeft: 5,
     marginRight: 5,
     justifyContent: 'center',
     alignItems: 'center',
+    borderColor: "#1e6b95",
+    borderWidth: 4,
+    paddingBottom: 10,
+    paddingTop: 10,
   },
 
   contentViewBgQRCode: {
-    height: 350,
-    width: 350,
+    height: 270,
+    width: 270,
     marginLeft: 40,
     marginRight: 40,
-    marginTop: 40,
-    marginBottom: 5
+    marginBottom: 40,
+    borderWidth: 1,
+    borderColor: '#000',
+  },
+
+  contentViewBgBarCode: {
+    height: 100,
+    borderWidth: 1,
+    borderColor: '#000',
   },
 
   contentViewBalance: {

@@ -53,7 +53,7 @@ export default createAppContainer(
     }
   },
   {
-    initialRouteName: 'QrCodePayment',
+    initialRouteName: 'Login',
     defaultNavigationOptions: {
       headerTitle: <SignedHeader />,
       headerBackTitle: null,

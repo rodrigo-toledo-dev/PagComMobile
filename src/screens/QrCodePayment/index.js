@@ -70,6 +70,22 @@ export default function QrCodePaymentScreen({ navigation }) {
     AsyncStorage.getItem("username").then(value => {
       setUserName(value)
     });
+
+    AsyncStorage.getItem('token').then( token => {
+      const url = constantsAPI.BASE_URL + constantsAPI.GET_BALANCE;
+      const headers = { headers: { Authorization: `Bearer ${token}` } };
+
+      api.get(url, headers).then( response => {
+        let { balance } = response.data
+        balance = MaskService.toMask('money', parseFloat(balance), {
+          unit: 'R$',
+          separator: ',',
+          delimiter: '.',
+        });
+
+        setBalance(balance);
+      });
+    });
   }, []);
 
   return (
@@ -104,23 +120,16 @@ export default function QrCodePaymentScreen({ navigation }) {
 
           <View style={styles.contentViewRow}>
             <View style={styles.contentViewBgQRCode}>
-              <View style={{width: 270, height: 270}}></View>
+              {/* qr code 270 */}
             </View>
-            <View style={styles.contentViewBgCode}>
+            <View style={styles.contentViewBgBarCode}>
             </View>
           </View>
-
           <View style={styles.contentViewBalance}>
-            <Text style={styles.textGrayBottom}>Seu saldo no</Text>
-            <Image
-              style={styles.logoBottom}
-              source={require("../../images/ic_logo_home.png")}
-            />
-            <View>
-              <Text style={styles.textGrayBoldBottom}>
-                {balance}
-              </Text>
-            </View>
+            <Text style={styles.textGrayBottom}>Seu saldo atual </Text>
+            <Text style={styles.textGrayBoldBottom}>
+              {balance}
+            </Text>
           </View>
         </View>
 
