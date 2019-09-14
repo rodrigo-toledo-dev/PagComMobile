@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { KeyboardAvoidingView, Platform, View, Text, Image, TextInput, TouchableOpacity, Alert, ActivityIndicator, ScrollView } from 'react-native';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { MaskService } from 'react-native-masked-text';
 
@@ -14,7 +14,6 @@ import styles from './styles'
 import generalStyles from '../../generalStyles';
 
 export default function HomeScreen({ navigation }) {
-  let [isModalVisible, setIsModalVisible] = useState(false);
   let [balance, setBalance] = useState('...');
 
   useEffect(() => {
@@ -50,9 +49,9 @@ export default function HomeScreen({ navigation }) {
     navigation.navigate('SendMoney')
   }
 
-  async function withDrawMoney(){
-    console.tron.log('Sacando dinheiro')
-    navigation.navigate('WithDrawMoney')
+  async function qrCodePayment(){
+    console.tron.log('Indo para QR')
+    navigation.navigate('QrCodePayment')
   }
 
   // componentDidMount() {
@@ -86,7 +85,7 @@ export default function HomeScreen({ navigation }) {
             <Text style={styles.textBalance}>Saldo</Text>
           </View>
           <View style={styles.scanOptionsView}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={qrCodePayment}>
               <Image
                 source={require('../../images/home/icon_right_one.png')}
                 style={styles.iconRight}
@@ -103,10 +102,9 @@ export default function HomeScreen({ navigation }) {
         </View>
         <View style={generalStyles.mainActionsView}>
           <ButtonLinearGradient style={styles.buttonContainer} onPress={sendMoney} text='Enviar' />
-          <ButtonLinearGradient style={styles.buttonContainer} onPress={withDrawMoney} text='Sacar' />
           <ButtonLinearGradient style={styles.buttonContainer} onPress={requestMoney} text='Solicitar' />
         </View>
-        <View style={{height: 100}}>
+        <View style={{height: '45%'}}>
           <Text style={styles.transactionsTitleText}>Transações</Text>
           <Transactions />
         </View>

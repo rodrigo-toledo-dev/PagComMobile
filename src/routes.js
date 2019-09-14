@@ -7,8 +7,8 @@ import SignUpScreen from './screens/SignUp';
 import EditAccountScreen from './screens/EditAccount';
 import LoginScreen from './screens/Login';
 import SendMoneyScreen from './screens/SendMoney';
-import WithDrawMoneyScreen from './screens/WithDrawMoney';
 import RequestMoneyScreen from './screens/RequestMoney';
+import QrCodePaymentScreen from './screens/QrCodePayment';
 import HomeScreen from './screens/Home';
 
 // common components
@@ -27,8 +27,8 @@ export default createAppContainer(
     SendMoney: {
       screen: SendMoneyScreen
     },
-    WithDrawMoney: {
-      screen: WithDrawMoneyScreen
+    QrCodePayment: {
+      screen: QrCodePaymentScreen
     },
     EditAccount: {
       screen: EditAccountScreen
@@ -53,7 +53,7 @@ export default createAppContainer(
     }
   },
   {
-    initialRouteName: 'Login',
+    initialRouteName: 'QrCodePayment',
     defaultNavigationOptions: {
       headerTitle: <SignedHeader />,
       headerBackTitle: null,
