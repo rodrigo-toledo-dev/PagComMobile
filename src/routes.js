@@ -8,6 +8,7 @@ import EditAccountScreen from './screens/EditAccount';
 import LoginScreen from './screens/Login';
 import MenuOptionsScreen from './screens/MenuOptions';
 import MenuAntecipateScreen from './screens/MenuAntecipate';
+import MenuPaymentsScreen from './screens/MenuPayments';
 import SendMoneyScreen from './screens/SendMoney';
 import RequestMoneyScreen from './screens/RequestMoney';
 import QrCodePaymentScreen from './screens/QrCodePayment';
@@ -28,6 +29,9 @@ export default createAppContainer(
     },
     MenuAntecipate: {
       screen: MenuAntecipateScreen
+    },
+    MenuPayments: {
+      screen: MenuPaymentsScreen
     },
     RequestMoney: {
       screen: RequestMoneyScreen
@@ -61,7 +65,7 @@ export default createAppContainer(
     }
   },
   {
-    initialRouteName: 'Login',
+    initialRouteName: 'Home',
     defaultNavigationOptions: {
       headerTitle: <SignedHeader />,
       headerBackTitle: null,
