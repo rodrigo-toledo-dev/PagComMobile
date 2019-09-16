@@ -59,28 +59,6 @@ export default function HomeScreen({ navigation }) {
     navigation.navigate('MenuOptions')
   }
 
-  // componentDidMount() {
-  //   try {
-  //     AsyncStorage.getItem('token').then( token => {
-  //       const url = constantsAPI.BASE_URL + constantsAPI.GET_BALANCE;
-  //       const headers = { headers: { Authorization: `Bearer ${token}` } };
-
-  //       await api.get(url, headers).then( response => {
-  //         let { balance } = response.data
-  //         balance = MaskService.toMask('money', parseFloat(balance), {
-  //           unit: 'R$',
-  //           separator: ',',
-  //           delimiter: '.',
-  //         });
-
-  //         this.setState({ balance });
-  //       });
-  //     });
-  //   } catch (error) {
-  //     console.tron.log(error);
-  //   }
-  // }
-
   return (
     <View style={styles.container}>
       <View style={styles.mainView}>

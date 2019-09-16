@@ -7,6 +7,7 @@ import SignUpScreen from './screens/SignUp';
 import EditAccountScreen from './screens/EditAccount';
 import LoginScreen from './screens/Login';
 import MenuOptionsScreen from './screens/MenuOptions';
+import MenuAntecipateScreen from './screens/MenuAntecipate';
 import SendMoneyScreen from './screens/SendMoney';
 import RequestMoneyScreen from './screens/RequestMoney';
 import QrCodePaymentScreen from './screens/QrCodePayment';
@@ -24,6 +25,9 @@ export default createAppContainer(
     },
     MenuOptions: {
       screen: MenuOptionsScreen
+    },
+    MenuAntecipate: {
+      screen: MenuAntecipateScreen
     },
     RequestMoney: {
       screen: RequestMoneyScreen
