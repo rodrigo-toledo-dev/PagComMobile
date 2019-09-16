@@ -14,91 +14,110 @@ import generalStyles from '../../generalStyles';
 
 export default function MenuAntecipateScreen({ navigation }) {
   let [show, setShow] = useState(false);
-  let [radio1, setRadio1] = useState(false);
-  let [radio2, setRadio2] = useState(true);
+  let [enable, setEnable] = useState(false);
+  let [effectOnBefore, setEffectOnBefore] = useState(true);
 
   useEffect(() => {
-    AsyncStorage.getItem("radio").then(radio => {
-      if (radio == "radioOne") {
-        handleRadioOne
-      } else if (radio == "radioTwo") {
-        handleRadioTwo
-      }
-      console.tron.log(radio)
-    });
-  })
+    getAntecipateStatus();
+    setEffectOnBefore(false);
+  },[effectOnBefore]);
 
-  handleRadioOne = () => {
-    setRadio1(true)
-    setRadio2(false)
+  getAntecipateStatus = () => {
+    if(effectOnBefore){
+      AsyncStorage.getItem("token").then(token => {
+        let url = constantsAPI.BASE_URL + constantsAPI.EXTRACT;
+
+        fetch(url, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+          }
+        })
+          .then(response => response.json())
+          .then(response => {
+            if (response.error) {
+              console.tron.log("response erro Ao obter se esta antecipando:");
+              console.tron.log(response.error);
+
+            } else {
+              console.tron.log('Antecipacao atual');
+              console.tron.log(response);
+              // if(response.antecipate){
+              //   setEnable(true);
+              // }else{
+              //   setEnable(false);
+              // }
+            }
+          })
+          .catch(() => {
+
+          })
+          .done();
+      });
+    }
   }
 
-  handleRadioTwo = () => {
-    setRadio1(false);
-    setRadio2(true);
-  }
+  handleStatus = (status) => {
+    setEnable(status)
+  };
+
 
   handleAccept = () => {
-    if (!radio1 && !radio2) {
-      Alert.alert("Atenção", "Por favor selecione uma das opções");
+    if (enable) {
+      AsyncStorage.getItem("token").then(token => {
+        setShow(true)
+
+        let url = constantsAPI.BASE_URL + constantsAPI.ANTICIPATE;
+
+        fetch(url, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+          }
+        })
+          .then(response => response.json())
+          .then(() => {
+            setShow(false)
+            Alert.alert("Atenção", "Antecipação realizada com sucesso");
+          })
+          .catch(() => {
+            setShow(false)
+            Alert.alert(
+              "Atenção",
+              "Erro ao tentar contratar antecipação tente novamente mais tarde!"
+            );
+          })
+          .done();
+      });
     } else {
-      if (radio1) {
-        AsyncStorage.setItem("radio", "radioOne");
-        AsyncStorage.getItem("token").then(token => {
-          setShow(true)
+      AsyncStorage.getItem("token").then(token => {
+        setShow(true)
 
-          let url = constantsAPI.BASE_URL + constantsAPI.ANTICIPATE;
+        let url = constantsAPI.BASE_URL + constantsAPI.ANTICIPATE;
 
-          fetch(url, {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json"
-            }
+        fetch(url, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+          }
+        })
+          .then(response => response.json())
+          .then(() => {
+            setShow(false)
+            Alert.alert("Atenção", "Antecipação desativada com sucesso");
           })
-            .then(response => response.json())
-            .then(() => {
-              setShow(false)
-              Alert.alert("Atenção", "Antecipação realizada com sucesso");
-            })
-            .catch(() => {
-              setShow(false)
-              Alert.alert(
-                "Atenção",
-                "Erro ao tentar contratar antecipação tente novamente mais tarde!"
-              );
-            })
-            .done();
-        });
-      } else {
-        AsyncStorage.setItem("radio", "radioTwo");
-        AsyncStorage.getItem("token").then(token => {
-          setShow(true)
-
-          let url = constantsAPI.BASE_URL + constantsAPI.ANTICIPATE;
-
-          fetch(url, {
-            method: "DELETE",
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json"
-            }
+          .catch(() => {
+            setShow(false)
+            Alert.alert(
+              "Atenção",
+              "Erro ao tentar contratar antecipação tente novamente mais tarde!"
+            );
           })
-            .then(response => response.json())
-            .then(() => {
-              setShow(false)
-              Alert.alert("Atenção", "Antecipação desativada com sucesso");
-            })
-            .catch(() => {
-              setShow(false)
-              Alert.alert(
-                "Atenção",
-                "Erro ao tentar contratar antecipação tente novamente mais tarde!"
-              );
-            })
-            .done();
-        });
-      }
+          .done();
+      });
     }
   }
 
@@ -133,8 +152,8 @@ export default function MenuAntecipateScreen({ navigation }) {
           <ListItem>
             <CheckBox
               style={styles.checkBox}
-              checked={radio1}
-              onPress={handleRadioOne}
+              checked={enable == true}
+              onPress={() => {handleStatus(true)}}
             />
             <Body>
               <Text style={styles.checkBoxTextGray}>Ativado</Text>
@@ -143,8 +162,8 @@ export default function MenuAntecipateScreen({ navigation }) {
           <ListItem>
             <CheckBox
               style={styles.checkBox}
-              checked={radio2}
-              onPress={handleRadioTwo}
+              checked={enable == false}
+              onPress={() => {handleStatus(false)}}
             />
 
             <Body>
