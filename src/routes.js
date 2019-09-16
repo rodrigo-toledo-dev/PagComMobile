@@ -61,7 +61,7 @@ export default createAppContainer(
     }
   },
   {
-    initialRouteName: 'MenuAntecipate',
+    initialRouteName: 'Login',
     defaultNavigationOptions: {
       headerTitle: <SignedHeader />,
       headerBackTitle: null,

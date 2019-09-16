@@ -8,7 +8,6 @@ import ButtonLinearGradient from '../../components/ButtonLinearGradient';
 
 import constantsAPI from '../../constantsApi';
 
-
 import styles from './styles'
 import generalStyles from '../../generalStyles';
 
@@ -18,14 +17,15 @@ export default function MenuAntecipateScreen({ navigation }) {
   let [effectOnBefore, setEffectOnBefore] = useState(true);
 
   useEffect(() => {
+    setShow(true)
     getAntecipateStatus();
-    setEffectOnBefore(false);
   },[effectOnBefore]);
 
   getAntecipateStatus = () => {
     if(effectOnBefore){
+      setEffectOnBefore(false);
       AsyncStorage.getItem("token").then(token => {
-        let url = constantsAPI.BASE_URL + constantsAPI.EXTRACT;
+        let url = constantsAPI.BASE_URL + constantsAPI.ACCOUNT_DATA;
 
         fetch(url, {
           method: "GET",
@@ -39,19 +39,16 @@ export default function MenuAntecipateScreen({ navigation }) {
             if (response.error) {
               console.tron.log("response erro Ao obter se esta antecipando:");
               console.tron.log(response.error);
-
             } else {
               console.tron.log('Antecipacao atual');
-              console.tron.log(response);
-              // if(response.antecipate){
-              //   setEnable(true);
-              // }else{
-              //   setEnable(false);
-              // }
+              console.tron.log(effectOnBefore);
+              setEnable(response.enable_automatic_anticipation);
             }
+            setShow(false)
           })
           .catch(() => {
-
+            console.tron.log("get response error antecipando");
+            setShow(false)
           })
           .done();
       });
@@ -61,7 +58,6 @@ export default function MenuAntecipateScreen({ navigation }) {
   handleStatus = (status) => {
     setEnable(status)
   };
-
 
   handleAccept = () => {
     if (enable) {
@@ -119,10 +115,6 @@ export default function MenuAntecipateScreen({ navigation }) {
           .done();
       });
     }
-  }
-
-  buttonCancel = () => {
-    return Actions.home();
   }
 
   return (
