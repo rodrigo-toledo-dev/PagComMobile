@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-import { View, Text, Alert, ActivityIndicator, ScrollView } from 'react-native';
+import { View, Text, Alert, TextInput, TouchableOpacity, ActivityIndicator, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ListItem, Content, Body, CheckBox } from "native-base";
+import { ListItem, Content } from "native-base";
 
 import ButtonLinearGradient from '../../components/ButtonLinearGradient';
 
@@ -62,6 +62,22 @@ export default function MenuPaymentsScreen({ navigation }) {
       });
     }
   }
+
+  handleInitialDate = datetime => {
+    const date = moment(datetime).format("DD/MM/YYYY");
+
+    setInitialDateIsVisible(false);
+    setInitialDateInput(date)
+    setInitialDate(date.split("/").reverse().join("-"))
+  };
+
+  handleFinalDate = datetime => {
+    const date = moment(datetime).format("DD/MM/YYYY");
+
+    setFinalDateIsVisible(false);
+    setFinalDateInput(date)
+    setFinalDate(date.split("/").reverse().join("-"))
+  };
 
   handleStatus = (status) => {
     setEnable(status)
@@ -151,19 +167,19 @@ export default function MenuPaymentsScreen({ navigation }) {
           <TouchableOpacity onPress={() => {setInitialDateIsVisible(true)}}>
             <TextInput
               onTouchStart={() => {setInitialDateIsVisible(true)}}
-              value={duedateInput}
+              value={initialDateInput}
               editable={false}
               autoCapitalize="none"
               placeholder="Data de vencimento"
               style={styles.input}
-              onChangeText={value => setDuedate(value)}
+              onChangeText={value => setInitialDate(value)}
             />
           </TouchableOpacity>
 
           <DateTimePicker
-            isVisible={isVisiblePickerOne}
-            onConfirm={handlePickerOne}
-            onCancel={handlePickerOne}
+            isVisible={initialDateIsVisible}
+            onConfirm={handleInitialDate}
+            onCancel={handleInitialDate}
           />
         </Content>
 
