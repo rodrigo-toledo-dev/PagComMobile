@@ -14,6 +14,14 @@ import generalStyles from '../../generalStyles';
 export default function MenuPaymentsScreen({ navigation }) {
   let [show, setShow] = useState(false);
   let [enable, setEnable] = useState(false);
+  let [initialDateIsVisible, setInitialDateIsVisible] = useState(false);
+  let [initialDateInput, setInitialDateInput] = useState('');
+  let [initialDate, setInitialDate] = useState('');
+
+  let [finalDateIsVisible, setFinalDateIsVisible] = useState(false);
+  let [finalDateInput, setFinalDateInput] = useState('');
+  let [finalDate, setFinalDate] = useState('');
+
   let [effectOnBefore, setEffectOnBefore] = useState(true);
 
   useEffect(() => {
@@ -139,27 +147,24 @@ export default function MenuPaymentsScreen({ navigation }) {
         )}
 
         <Content>
-          <ListItem>
-            <CheckBox
-              style={styles.checkBox}
-              checked={enable == true}
-              onPress={() => {handleStatus(true)}}
+          <Text style={generalStyles.textBlueTitle}>Data inicial</Text>
+          <TouchableOpacity onPress={() => {setInitialDateIsVisible(true)}}>
+            <TextInput
+              onTouchStart={() => {setInitialDateIsVisible(true)}}
+              value={duedateInput}
+              editable={false}
+              autoCapitalize="none"
+              placeholder="Data de vencimento"
+              style={styles.input}
+              onChangeText={value => setDuedate(value)}
             />
-            <Body>
-              <Text style={styles.checkBoxTextGray}>Ativado</Text>
-            </Body>
-          </ListItem>
-          <ListItem>
-            <CheckBox
-              style={styles.checkBox}
-              checked={enable == false}
-              onPress={() => {handleStatus(false)}}
-            />
+          </TouchableOpacity>
 
-            <Body>
-              <Text style={styles.checkBoxTextGray}>Desativado</Text>
-            </Body>
-          </ListItem>
+          <DateTimePicker
+            isVisible={isVisiblePickerOne}
+            onConfirm={handlePickerOne}
+            onCancel={handlePickerOne}
+          />
         </Content>
 
         <View style={generalStyles.mainActionsView}>
