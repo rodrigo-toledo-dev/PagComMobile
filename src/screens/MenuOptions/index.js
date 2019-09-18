@@ -64,7 +64,7 @@ export default function MenuOptionsScreen({ navigation }) {
 
         <ListItem
           button={true}
-          onPress={() => {navigation.navigate('MenuDeposit')}}
+          onPress={() => {navigation.navigate('MenuDeposits')}}
           noBorder
         >
           <View style={styles.iconRowMenu}>
