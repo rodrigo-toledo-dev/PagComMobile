@@ -1,17 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-import { KeyboardAvoidingView, Platform, View, Text, Image, TextInput, TouchableOpacity, Alert, ActivityIndicator, ScrollView } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
-import { TextInputMask, MaskService } from 'react-native-masked-text';
-import { Container, Content, Left, Right, Body } from "native-base";
+import { View, Text, Image, TextInput, TouchableOpacity, Alert, ActivityIndicator, ScrollView } from 'react-native';
+import { TextInputMask } from 'react-native-masked-text';
 
 import ButtonLinearGradient from '../../components/ButtonLinearGradient';
-import Transactions from '../../components/Transactions';
 import DateTimePicker from "react-native-modal-datetime-picker";
 import moment from "moment";
-import constantsAPI from '../../constantsApi';
-
-import api from '../../services/api';
 
 import styles from './styles'
 import generalStyles from '../../generalStyles';
@@ -74,28 +68,6 @@ export default function RequestMoneyScreen({ navigation }) {
       Alert.alert("Atenção", "Por favor preencha todos os campos");
     }
   }
-
-  // componentDidMount = () => {
-  //   try {
-  //     AsyncStorage.getItem('token').then( token => {
-  //       const url = constantsAPI.BASE_URL + constantsAPI.GET_BALANCE;
-  //       const headers = { headers: { Authorization: `Bearer ${token}` } };
-
-  //       await api.get(url, headers).then( response => {
-  //         let { balance } = response.data
-  //         balance = MaskService.toMask('money', parseFloat(balance), {
-  //           unit: 'R$',
-  //           separator: ',',
-  //           delimiter: '.',
-  //         });
-
-  //         this.setState({ balance });
-  //       });
-  //     });
-  //   } catch (error) {
-  //     console.tron.log(error);
-  //   }
-  // }
 
   return (
     <View style={generalStyles.container}>
