@@ -228,7 +228,7 @@ export default StyleSheet.create({
     paddingRight: 5,
     fontSize: 17
   },
-
+  
   buttonContainer: {
     marginLeft: 28,
     marginRight: 28,

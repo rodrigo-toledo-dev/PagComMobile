@@ -6,7 +6,7 @@ import { Picker, Content } from "native-base";
 
 import PaymentListItem from '../../components/PaymentListItem';
 import ButtonLinearGradient from '../../components/ButtonLinearGradient';
-import DateTimePicker from "react-native-modal-datetime-picker";
+import DatePicker from 'react-native-datepicker';
 import moment from "moment";
 
 import constantsAPI from '../../constantsApi';
@@ -16,11 +16,12 @@ import generalStyles from '../../generalStyles';
 
 export default function MenuPaymentsScreen({ navigation }) {
   let [show, setShow] = useState(false);
-  let [enable, setEnable] = useState(false);
+
+  let [isVisiblePickerOne, setIsVisiblePickerOne] = useState(false);
 
   let [initialDateIsVisible, setInitialDateIsVisible] = useState(false);
   let [initialDateInput, setInitialDateInput] = useState('');
-  let [initialDate, setInitialDate] = useState('');
+  let [initialDate, setInitialDate] = useState();
 
   let [finalDateIsVisible, setFinalDateIsVisible] = useState(false);
   let [finalDateInput, setFinalDateInput] = useState('');
@@ -37,7 +38,7 @@ export default function MenuPaymentsScreen({ navigation }) {
 
   getPayments = () => {
     AsyncStorage.getItem("token").then(token => {
-      let url = constantsAPI.BASE_URL + constantsAPI.PAYMENT_LIST;
+      const url = constantsAPI.BASE_URL + constantsAPI.PAYMENT_LIST;
 
       fetch(url, {
         method: "GET",
@@ -66,19 +67,9 @@ export default function MenuPaymentsScreen({ navigation }) {
     });
   }
 
-  handleInitialDate = datetime => {
-    const date = moment(datetime).format("DD/MM/YYYY");
-
-    setInitialDateIsVisible(false);
-    setInitialDateInput(date)
-    setInitialDate(date.split("/").reverse().join("-"));
+  hidePickerOne = () => {
+    setIsVisiblePickerOne(false);
   };
-
-  resetInitialDate = () => {
-    setInitialDateIsVisible(false);
-    setInitialDateInput('')
-    setInitialDate('')
-  }
 
   handleFinalDate = datetime => {
     const date = moment(datetime).format("DD/MM/YYYY");
@@ -93,10 +84,6 @@ export default function MenuPaymentsScreen({ navigation }) {
     setFinalDateInput('')
     setFinalDate('')
   }
-
-  handleStatus = (status) => {
-    setEnable(status)
-  };
 
   filter = () => {
     if(initialDate === '' || finalDate === '' || status === false){
@@ -132,10 +119,6 @@ export default function MenuPaymentsScreen({ navigation }) {
             console.tron.log('filtro ocorrendo');
             setPayments(response.payments);
             setShow(false);
-            // let state = this.state;
-            // state.list = response;
-            // this.setState(state);
-
           }
         })
         .catch(() => {
@@ -147,77 +130,72 @@ export default function MenuPaymentsScreen({ navigation }) {
   }
 
   return (
-    <View style={generalStyles.container}>
-      <ScrollView>
+    <ScrollView>
 
-        <Text style={generalStyles.textBlueTitle}>Pagamentos</Text>
-        <Text style={generalStyles.textGray}>Inicialmente os Pagamentos já serão listados mas você pode usar os filtros abaixo para obter melhores resultados</Text>
+      <Text style={generalStyles.textBlueTitle}>Pagamentos</Text>
+      <Text style={generalStyles.textGray}>Inicialmente os Pagamentos já serão listados mas você pode usar os filtros abaixo para obter melhores resultados</Text>
 
-        {show && (
-          <ActivityIndicator
-            size="large"
-            color={"#007AFF"}
-            animating={show}
-            style={{
-              flex: 1,
-              justifyContent: "center",
-              marginBottom: 5,
-              marginTop: 5
-            }}
-          />
-        )}
+      {show && (
+        <ActivityIndicator
+          size="large"
+          color={"#007AFF"}
+          animating={show}
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            marginBottom: 5,
+            marginTop: 5
+          }}
+        />
+      )}
 
-        <Content>
-          <TouchableOpacity onPress={() => {setInitialDateIsVisible(true)}}>
-            <TextInput
-              onTouchStart={() => {setInitialDateIsVisible(true)}}
-              value={initialDateInput}
-              editable={false}
-              autoCapitalize="none"
-              placeholder="Data inicial"
-              style={styles.input}
-              onChangeText={value => setInitialDate(value)}
-            />
-          </TouchableOpacity>
+      <Content>
+        <DatePicker
+          style={generalStyles.datePicker}
+          date={initialDate}
+          mode="date"
+          placeholder="Data Inicial"
+          format="YYYY-MM-DD"
+          minDate="1990-01-01"
+          confirmBtnText="Confirmar"
+          cancelBtnText="Cancelar"
+          customStyles={{
+            dateIcon: generalStyles.datePickerIcon,
+            dateInput: generalStyles.datePickerInput
+          }}
+          onDateChange={(value) => {setInitialDate(value)}}
+        />
 
-          <DateTimePicker
-            isVisible={initialDateIsVisible}
-            onConfirm={handleInitialDate}
-            onCancel={resetInitialDate}
-          />
+        <DatePicker
+          style={generalStyles.datePicker}
+          date={finalDate}
+          mode="date"
+          placeholder="Data final"
+          format="YYYY-MM-DD"
+          minDate="1990-01-01"
+          confirmBtnText="Confirmar"
+          cancelBtnText="Cancelar"
+          customStyles={{
+            dateIcon: generalStyles.datePickerIcon,
+            dateInput: generalStyles.datePickerInput
+          }}
+          onDateChange={(value) => {setFinalDate(value)}}
+        />
 
-          <TouchableOpacity onPress={() => {setFinalDateIsVisible(true)}}>
-            <TextInput
-              onTouchStart={() => {setFinalDateIsVisible(true)}}
-              value={finalDateInput}
-              editable={false}
-              autoCapitalize="none"
-              placeholder="Data final"
-              style={styles.input}
-              onChangeText={value => setFinalDate(value)}
-            />
-          </TouchableOpacity>
-
-          <DateTimePicker
-            isVisible={finalDateIsVisible}
-            onConfirm={handleFinalDate}
-            onCancel={resetFinalDate}
-          />
-
-          <Text style={generalStyles.textBlueTitle}>Situação</Text>
-          <Picker
-              style={styles.input}
-              onValueChange={(itemValue, itemIndex) => setStatus(itemValue)}
-              selectedValue={status}>
-              <Picker.Item label="Aguardando" value="waiting" />
-              <Picker.Item label="Processando" value="processing" />
-              <Picker.Item label="Aprovado" value="approved" />
-              <Picker.Item label="Cancelado" value="cancelled" />
-              <Picker.Item label="Compensado" value="completed" />
-              <Picker.Item label="Estornado" value="refunded" />
-              <Picker.Item label="Antecipado" value="anticipated" />
-          </Picker>
-        </Content>
+        <Text style={generalStyles.textBlueTitle}>Situação</Text>
+        <Picker
+            style={styles.input}
+            onValueChange={(itemValue, itemIndex) => setStatus(itemValue)}
+            selectedValue={status}>
+            <Picker.Item label="Aguardando" value="waiting" />
+            <Picker.Item label="Processando" value="processing" />
+            <Picker.Item label="Aprovado" value="approved" />
+            <Picker.Item label="Cancelado" value="cancelled" />
+            <Picker.Item label="Compensado" value="completed" />
+            <Picker.Item label="Estornado" value="refunded" />
+            <Picker.Item label="Antecipado" value="anticipated" />
+        </Picker>
+      </Content>
 
         <View style={generalStyles.mainActionsView}>
           <View style={styles.footerButtonContainer}>
@@ -243,8 +221,6 @@ export default function MenuPaymentsScreen({ navigation }) {
         </View>
 
       </ScrollView>
-
-    </View>
   );
 };
 

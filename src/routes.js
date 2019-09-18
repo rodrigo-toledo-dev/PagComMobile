@@ -65,7 +65,7 @@ export default createAppContainer(
     }
   },
   {
-    initialRouteName: 'MenuPayments',
+    initialRouteName: 'Login',
     defaultNavigationOptions: {
       headerTitle: <SignedHeader />,
       headerBackTitle: null,
