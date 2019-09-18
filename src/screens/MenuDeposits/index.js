@@ -4,7 +4,7 @@ import { View, Text, Alert, TextInput, TouchableOpacity, ActivityIndicator, Scro
 import AsyncStorage from '@react-native-community/async-storage';
 import { Picker, Content } from "native-base";
 
-import PaymentListItem from '../../components/PaymentListItem';
+import DepositListItem from '../../components/DepositListItem';
 import ButtonLinearGradient from '../../components/ButtonLinearGradient';
 import DateTimePicker from "react-native-modal-datetime-picker";
 import moment from "moment";
@@ -14,7 +14,7 @@ import constantsAPI from '../../constantsApi';
 import styles from './styles'
 import generalStyles from '../../generalStyles';
 
-export default function MenuPaymentsScreen({ navigation }) {
+export default function MenuDepositsScreen({ navigation }) {
   let [show, setShow] = useState(false);
   let [enable, setEnable] = useState(false);
 
@@ -28,16 +28,16 @@ export default function MenuPaymentsScreen({ navigation }) {
 
   let [status, setStatus] = useState('');
 
-  let [payments, setPayments] = useState(false);
+  let [deposits, setDeposits] = useState(false);
 
   useEffect(() => {
     setShow(true)
-    getPayments();
+    getDeposits();
   },[]);
 
-  getPayments = () => {
+  getDeposits = () => {
     AsyncStorage.getItem("token").then(token => {
-      let url = constantsAPI.BASE_URL + constantsAPI.PAYMENT_LIST;
+      let url = constantsAPI.BASE_URL + constantsAPI.DAILY_DEPOSITS;
 
       fetch(url, {
         method: "GET",
@@ -49,17 +49,17 @@ export default function MenuPaymentsScreen({ navigation }) {
         .then(response => response.json())
         .then(response => {
           if (response.error) {
-            console.tron.log("response error ao tentar obter Payments:");
+            console.tron.log("response error ao tentar obter Deposits:");
             console.tron.log(response.error);
           } else {
-            console.tron.log('Resultados atuais Payments');
-            console.tron.log(response.payments);
-            setPayments(response.payments);
+            console.tron.log('Resultados atuais Deposits');
+            console.tron.log(response);
+            setDeposits(response);
           }
           setShow(false)
         })
         .catch(() => {
-          console.tron.log("get response error Payments");
+          console.tron.log("get response error Deposits");
           setShow(false)
         })
         .done();
@@ -111,8 +111,11 @@ export default function MenuPaymentsScreen({ navigation }) {
 
         let url =
           constantsAPI.BASE_URL +
-          constantsAPI.PAYMENT_FILTER +
-          `?payments={"start_date":"${initialDateToFilter}","end_date":"${finalDateToFilter}","status":"${statusToFilter}"}`;
+          constantsAPI.DAILY_DEPOSITS;
+          // let url =
+          // constantsAPI.BASE_URL +
+          // constantsAPI.PAYMENT_FILTER +
+          // `?payments={"start_date":"${initialDateToFilter}","end_date":"${finalDateToFilter}","status":"${statusToFilter}"}`;
 
         fetch(url, {
           method: "GET",
@@ -130,7 +133,7 @@ export default function MenuPaymentsScreen({ navigation }) {
             setShow(false);
           } else {
             console.tron.log('filtro ocorrendo');
-            setPayments(response.payments);
+            setDeposits(response);
             setShow(false);
 
           }
@@ -147,8 +150,8 @@ export default function MenuPaymentsScreen({ navigation }) {
     <View style={generalStyles.container}>
       <ScrollView>
 
-        <Text style={generalStyles.textBlueTitle}>Pagamentos</Text>
-        <Text style={generalStyles.textGray}>Inicialmente os Pagamentos já serão listados mas você pode filtrar para obter melhores resultados</Text>
+        <Text style={generalStyles.textBlueTitle}>Extratos de todos os depósitos</Text>
+        <Text style={generalStyles.textGray}>Inicialmente os depósitos já serão listados mas você pode filtrar para obter melhores resultados</Text>
 
         {show && (
           <ActivityIndicator
@@ -206,13 +209,8 @@ export default function MenuPaymentsScreen({ navigation }) {
               style={styles.input}
               onValueChange={(itemValue, itemIndex) => setStatus(itemValue)}
               selectedValue={status}>
-              <Picker.Item label="Aguardando" value="waiting" />
-              <Picker.Item label="Processando" value="processing" />
-              <Picker.Item label="Aprovado" value="approved" />
-              <Picker.Item label="Cancelado" value="cancelled" />
-              <Picker.Item label="Compensado" value="completed" />
-              <Picker.Item label="Estornado" value="refunded" />
-              <Picker.Item label="Antecipado" value="anticipated" />
+              <Picker.Item label="Agendado" value="scheduled" />
+              <Picker.Item label="Completo" value="completed" />
           </Picker>
         </Content>
 
@@ -225,17 +223,17 @@ export default function MenuPaymentsScreen({ navigation }) {
           </View>
         </View>
         <View>
-          {payments && (<Text style={generalStyles.textBlueTitle}>Resultados:</Text>)}
-          {payments && payments.length > 0 && (
+          {deposits && (<Text style={generalStyles.textBlueTitle}>Resultados:</Text>)}
+          {deposits && deposits.length > 0 && (
             <FlatList
-              data={payments}
-              renderItem={({ item }) => <PaymentListItem data={item} />}
-              keyExtractor={(item) => item.id.toString()}
+              data={deposits}
+              renderItem={({ item }) => <DepositListItem data={item} />}
+              keyExtractor={item => item.due_on}
             />
           )}
 
-          {payments && payments.length === 0 && (
-            <Text style={styles.textEmpty}>Nenhum pagamento encontrado</Text>
+          {deposits && deposits.length === 0 && (
+            <Text style={styles.textEmpty}>Nenhum depósito encontrado</Text>
           )}
         </View>
 
