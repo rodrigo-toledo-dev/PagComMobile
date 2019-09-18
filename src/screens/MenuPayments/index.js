@@ -228,14 +228,17 @@ export default function MenuPaymentsScreen({ navigation }) {
           </View>
         </View>
         <View>
-          {payments && (
-            <Text style={generalStyles.textBlueTitle}>Resultados:</Text>
-            &&
+          {payments && (<Text style={generalStyles.textBlueTitle}>Resultados:</Text>)}
+          {payments && payments.length > 0 && (
             <FlatList
               data={payments}
               renderItem={({ item }) => <PaymentListItem data={item} />}
               keyExtractor={(item) => item.id.toString()}
             />
+          )}
+
+          {payments && payments.length === 0 && (
+            <Text style={styles.textEmpty}>Nenhum pagamento encontrado</Text>
           )}
         </View>
 

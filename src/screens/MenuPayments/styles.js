@@ -94,11 +94,13 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: "center"
   },
-  transactionsTitleText:{
-    textAlign: 'center',
-    marginTop: 50,
-    fontSize: 17,
-    color: '#808080'
+
+  textEmpty:{
+    color: "#808080",
+    justifyContent: 'center',
+    fontWeight: "bold",
+    fontSize: 16,
+    textAlign: "center"
   },
 
   iconMenu: {
