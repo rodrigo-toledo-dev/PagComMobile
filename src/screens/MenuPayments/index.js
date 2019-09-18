@@ -71,75 +71,77 @@ export default function MenuPaymentsScreen({ navigation }) {
 
     setInitialDateIsVisible(false);
     setInitialDateInput(date)
-    setInitialDate(date.split("/").reverse().join("-"))
+    setInitialDate(date.split("/").reverse().join("-"));
   };
+
+  resetInitialDate = () => {
+    setInitialDateIsVisible(false);
+    setInitialDateInput('')
+    setInitialDate('')
+  }
 
   handleFinalDate = datetime => {
     const date = moment(datetime).format("DD/MM/YYYY");
 
     setFinalDateIsVisible(false);
     setFinalDateInput(date)
-    setFinalDate(date.split("/").reverse().join("-"))
+    setFinalDate(date.split("/").reverse().join("-"));
   };
+
+  resetFinalDate = () => {
+    setFinalDateIsVisible(false);
+    setFinalDateInput('')
+    setFinalDate('')
+  }
 
   handleStatus = (status) => {
     setEnable(status)
   };
 
   filter = () => {
-    if (enable) {
+    if(initialDate === '' || finalDate === '' || status === false){
+      Alert.alert('Atenção', 'Por favor todos os filtros devem ser preenchidos')
+    }else{
       AsyncStorage.getItem("token").then(token => {
-        setShow(true)
+        setShow(true);
+        let initialDateToFilter = moment(initialDate).format("DD/MM/YYYY");
+        let finalDateToFilter = moment(finalDate).format("DD/MM/YYYY");
 
-        let url = constantsAPI.BASE_URL + constantsAPI.ANTICIPATE;
+        let statusToFilter = status;
+
+        let url =
+          constantsAPI.BASE_URL +
+          constantsAPI.PAYMENT_FILTER +
+          `?payments={"start_date":"${initialDateToFilter}","end_date":"${finalDateToFilter}","status":"${statusToFilter}"}`;
 
         fetch(url, {
-          method: "POST",
+          method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json"
           }
         })
-          .then(response => response.json())
-          .then(() => {
-            setShow(false)
-            Alert.alert("Atenção", "Antecipação realizada com sucesso");
-          })
-          .catch(() => {
-            setShow(false)
-            Alert.alert(
-              "Atenção",
-              "Erro ao tentar contratar antecipação tente novamente mais tarde!"
-            );
-          })
-          .done();
-      });
-    } else {
-      AsyncStorage.getItem("token").then(token => {
-        setShow(true)
+        .then(response => response.json())
+        .then(response => {
+          setShow(false);
+          if (response.error) {
+            console.log("response error:");
+            console.log(response.error);
+            setShow(false);
+          } else {
+            console.tron.log('filtro ocorrendo');
+            setPayments(response.payments);
+            setShow(false);
+            // let state = this.state;
+            // state.list = response;
+            // this.setState(state);
 
-        let url = constantsAPI.BASE_URL + constantsAPI.ANTICIPATE;
-
-        fetch(url, {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json"
           }
         })
-          .then(response => response.json())
-          .then(() => {
-            setShow(false)
-            Alert.alert("Atenção", "Antecipação desativada com sucesso");
-          })
-          .catch(() => {
-            setShow(false)
-            Alert.alert(
-              "Atenção",
-              "Erro ao tentar contratar antecipação tente novamente mais tarde!"
-            );
-          })
-          .done();
+        .catch(() => {
+          setShow(false);
+        })
+        .done();
       });
     }
   }
@@ -181,7 +183,7 @@ export default function MenuPaymentsScreen({ navigation }) {
           <DateTimePicker
             isVisible={initialDateIsVisible}
             onConfirm={handleInitialDate}
-            onCancel={handleInitialDate}
+            onCancel={resetInitialDate}
           />
 
           <TouchableOpacity onPress={() => {setFinalDateIsVisible(true)}}>
@@ -199,21 +201,21 @@ export default function MenuPaymentsScreen({ navigation }) {
           <DateTimePicker
             isVisible={finalDateIsVisible}
             onConfirm={handleFinalDate}
-            onCancel={handleFinalDate}
+            onCancel={resetFinalDate}
           />
 
-          <Text style={generalStyles.textBlueTitle}>Status</Text>
+          <Text style={generalStyles.textBlueTitle}>Situação</Text>
           <Picker
               style={styles.input}
               onValueChange={(itemValue, itemIndex) => setStatus(itemValue)}
               selectedValue={status}>
-              <Picker.Item label="Aguardando" value="Aguardando" />
-              <Picker.Item label="Processando" value="Processando" />
-              <Picker.Item label="Aprovado" value="Aprovado" />
-              <Picker.Item label="Cancelado" value="Cancelado" />
-              <Picker.Item label="Compensado" value="Compensado" />
-              <Picker.Item label="Estornado" value="Estornado" />
-              <Picker.Item label="Antecipado" value="Antecipado" />
+              <Picker.Item label="Aguardando" value="waiting" />
+              <Picker.Item label="Processando" value="processing" />
+              <Picker.Item label="Aprovado" value="approved" />
+              <Picker.Item label="Cancelado" value="cancelled" />
+              <Picker.Item label="Compensado" value="completed" />
+              <Picker.Item label="Estornado" value="refunded" />
+              <Picker.Item label="Antecipado" value="anticipated" />
           </Picker>
         </Content>
 
