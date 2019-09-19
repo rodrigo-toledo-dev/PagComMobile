@@ -76,7 +76,7 @@ export default function MenuPaymentsScreen({ navigation }) {
   }
 
   filter = () => {
-    if(initialDate === '' || finalDate === '' || status === false){
+    if(initialDate === '' || finalDate === '' || status === false || status === ''){
       Alert.alert('Atenção', 'Por favor todos os filtros devem ser preenchidos')
     }else{
       AsyncStorage.getItem("token").then(token => {
@@ -177,6 +177,7 @@ export default function MenuPaymentsScreen({ navigation }) {
             style={styles.input}
             onValueChange={(itemValue, itemIndex) => setStatus(itemValue)}
             selectedValue={status}>
+            <Picker.Item label="Selecione uma situação" value="" />
             <Picker.Item label="Aguardando" value="waiting" />
             <Picker.Item label="Processando" value="processing" />
             <Picker.Item label="Aprovado" value="approved" />
