@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Text, View , Image } from 'react-native';
 import {List, ListItem, Left, Right, Body, Content} from 'native-base';
 import { MaskService } from 'react-native-masked-text';
-import styles from './styles.js';
+import styles from './styles';
 
 class PaymentListItem extends Component {
 

@@ -148,39 +148,39 @@ export default function MenuPaymentsScreen({ navigation }) {
           }}
         />
       )}
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <DatePicker
+            style={styles.inputDate}
+            date={initialDate}
+            mode="date"
+            placeholder="Data Inicial"
+            format="YYYY-MM-DD"
+            minDate="1990-01-01"
+            confirmBtnText="Confirmar"
+            cancelBtnText="Cancelar"
+            customStyles={{
+              dateIcon: styles.datePickerIcon,
+              dateInput: styles.datePickerInput
+            }}
+            onDateChange={(value) => {setInitialDate(value)}}
+          />
 
-      <Content>
-        <DatePicker
-          style={generalStyles.datePicker}
-          date={initialDate}
-          mode="date"
-          placeholder="Data Inicial"
-          format="YYYY-MM-DD"
-          minDate="1990-01-01"
-          confirmBtnText="Confirmar"
-          cancelBtnText="Cancelar"
-          customStyles={{
-            dateIcon: generalStyles.datePickerIcon,
-            dateInput: generalStyles.datePickerInput
-          }}
-          onDateChange={(value) => {setInitialDate(value)}}
-        />
-
-        <DatePicker
-          style={generalStyles.datePicker}
-          date={finalDate}
-          mode="date"
-          placeholder="Data final"
-          format="YYYY-MM-DD"
-          minDate="1990-01-01"
-          confirmBtnText="Confirmar"
-          cancelBtnText="Cancelar"
-          customStyles={{
-            dateIcon: generalStyles.datePickerIcon,
-            dateInput: generalStyles.datePickerInput
-          }}
-          onDateChange={(value) => {setFinalDate(value)}}
-        />
+          <DatePicker
+            style={styles.inputDate}
+            date={finalDate}
+            mode="date"
+            placeholder="Data final"
+            format="YYYY-MM-DD"
+            minDate="1990-01-01"
+            confirmBtnText="Confirmar"
+            cancelBtnText="Cancelar"
+            customStyles={{
+              dateIcon: styles.datePickerIcon,
+              dateInput: styles.datePickerInput
+            }}
+            onDateChange={(value) => {setFinalDate(value)}}
+          />
+        </View>
 
         <Text style={generalStyles.textBlueTitle}>Situação</Text>
         <Picker
@@ -195,7 +195,6 @@ export default function MenuPaymentsScreen({ navigation }) {
             <Picker.Item label="Estornado" value="refunded" />
             <Picker.Item label="Antecipado" value="anticipated" />
         </Picker>
-      </Content>
 
         <View style={generalStyles.mainActionsView}>
           <View style={styles.footerButtonContainer}>
@@ -223,5 +222,3 @@ export default function MenuPaymentsScreen({ navigation }) {
       </ScrollView>
   );
 };
-
-

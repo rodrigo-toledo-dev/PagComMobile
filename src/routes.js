@@ -9,6 +9,7 @@ import LoginScreen from './screens/Login';
 import MenuOptionsScreen from './screens/MenuOptions';
 import MenuAntecipateScreen from './screens/MenuAntecipate';
 import MenuPaymentsScreen from './screens/MenuPayments';
+import MenuDepositsScreen from './screens/MenuDeposits';
 import SendMoneyScreen from './screens/SendMoney';
 import RequestMoneyScreen from './screens/RequestMoney';
 import QrCodePaymentScreen from './screens/QrCodePayment';
@@ -32,6 +33,9 @@ export default createAppContainer(
     },
     MenuPayments: {
       screen: MenuPaymentsScreen
+    },
+    MenuDeposits: {
+      screen: MenuDepositsScreen
     },
     RequestMoney: {
       screen: RequestMoneyScreen
