@@ -69,7 +69,7 @@ export default createAppContainer(
     }
   },
   {
-    initialRouteName: 'MenuDeposits',
+    initialRouteName: 'QrCodePayment',
     defaultNavigationOptions: {
       headerTitle: <SignedHeader />,
       headerBackTitle: null,
