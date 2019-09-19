@@ -11,11 +11,16 @@ class PaymentListItem extends Component {
   }
 
   debitSub = () => {
-    return <Text ellipsizeMode='tail' numberOfLines={1} style={styles.debit}>Débito</Text>;
+    debitSub = this.props.data.credit === true ? 'Crédito' : 'Débito'
+    return <Text ellipsizeMode='tail' numberOfLines={1} style={styles.debit}>{debitSub}</Text>;
+  }
+
+  brand = () => {
+    brand = this.props.data.credit_card_brand === 'MASTERCARD' ? require('../../images/ic_master.png') : require('../../images/ic_visa.png');
+    return <Image source={brand} style={styles.image}/>
   }
 
   value = () => {
-
     const amount = MaskService.toMask('money', parseFloat(this.props.data.amount), {
       unit: 'R$',
       separator: ',',
@@ -23,7 +28,6 @@ class PaymentListItem extends Component {
     });
 
     return <Text ellipsizeMode='tail' numberOfLines={1} style={styles.value}>{amount}</Text>;
-
   }
 
   render() {
@@ -33,7 +37,7 @@ class PaymentListItem extends Component {
           <List>
             <ListItem avatar style={styles.list} noBorder>
               <Left style={{flexDirection: 'column'}}>
-                <Image source={require('../../images/ic_visa.png')} style={styles.image}/>
+                {this.brand()}
                 {this.debitSub()}
               </Left>
               <Body />
