@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-import { View, Text, Alert, TextInput, TouchableOpacity, ActivityIndicator, ScrollView, FlatList } from 'react-native';
+import { View, Text, Alert, ActivityIndicator, ScrollView, FlatList } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import { Picker, Content } from "native-base";
+import { Picker } from "native-base";
 
 import PaymentListItem from '../../components/PaymentListItem';
 import ButtonLinearGradient from '../../components/ButtonLinearGradient';
@@ -13,18 +13,12 @@ import constantsAPI from '../../constantsApi';
 
 import styles from './styles'
 import generalStyles from '../../generalStyles';
+import dateTimeStyles from '../../dateTimeStyles';
 
 export default function MenuPaymentsScreen({ navigation }) {
   let [show, setShow] = useState(false);
 
-  let [isVisiblePickerOne, setIsVisiblePickerOne] = useState(false);
-
-  let [initialDateIsVisible, setInitialDateIsVisible] = useState(false);
-  let [initialDateInput, setInitialDateInput] = useState('');
   let [initialDate, setInitialDate] = useState();
-
-  let [finalDateIsVisible, setFinalDateIsVisible] = useState(false);
-  let [finalDateInput, setFinalDateInput] = useState('');
   let [finalDate, setFinalDate] = useState('');
 
   let [status, setStatus] = useState('');
@@ -66,10 +60,6 @@ export default function MenuPaymentsScreen({ navigation }) {
         .done();
     });
   }
-
-  hidePickerOne = () => {
-    setIsVisiblePickerOne(false);
-  };
 
   handleFinalDate = datetime => {
     const date = moment(datetime).format("DD/MM/YYYY");
@@ -148,9 +138,9 @@ export default function MenuPaymentsScreen({ navigation }) {
           }}
         />
       )}
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View style={dateTimeStyles.dateView}>
           <DatePicker
-            style={styles.inputDate}
+            style={dateTimeStyles.inputDate}
             date={initialDate}
             mode="date"
             placeholder="Data Inicial"
@@ -159,14 +149,14 @@ export default function MenuPaymentsScreen({ navigation }) {
             confirmBtnText="Confirmar"
             cancelBtnText="Cancelar"
             customStyles={{
-              dateIcon: styles.datePickerIcon,
-              dateInput: styles.datePickerInput
+              dateIcon: dateTimeStyles.datePickerIcon,
+              dateInput: dateTimeStyles.datePickerInput
             }}
             onDateChange={(value) => {setInitialDate(value)}}
           />
 
           <DatePicker
-            style={styles.inputDate}
+            style={dateTimeStyles.inputDate}
             date={finalDate}
             mode="date"
             placeholder="Data final"
@@ -175,8 +165,8 @@ export default function MenuPaymentsScreen({ navigation }) {
             confirmBtnText="Confirmar"
             cancelBtnText="Cancelar"
             customStyles={{
-              dateIcon: styles.datePickerIcon,
-              dateInput: styles.datePickerInput
+              dateIcon: dateTimeStyles.datePickerIcon,
+              dateInput: dateTimeStyles.datePickerInput
             }}
             onDateChange={(value) => {setFinalDate(value)}}
           />

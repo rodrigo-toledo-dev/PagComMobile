@@ -6,24 +6,19 @@ import { Picker, Content } from "native-base";
 
 import DepositListItem from '../../components/DepositListItem';
 import ButtonLinearGradient from '../../components/ButtonLinearGradient';
-import DateTimePicker from "react-native-modal-datetime-picker";
+import DatePicker from 'react-native-datepicker';
 import moment from "moment";
 
 import constantsAPI from '../../constantsApi';
 
 import styles from './styles'
 import generalStyles from '../../generalStyles';
+import dateTimeStyles from '../../dateTimeStyles';
 
 export default function MenuDepositsScreen({ navigation }) {
   let [show, setShow] = useState(false);
-  let [enable, setEnable] = useState(false);
 
-  let [initialDateIsVisible, setInitialDateIsVisible] = useState(false);
-  let [initialDateInput, setInitialDateInput] = useState('');
-  let [initialDate, setInitialDate] = useState('');
-
-  let [finalDateIsVisible, setFinalDateIsVisible] = useState(false);
-  let [finalDateInput, setFinalDateInput] = useState('');
+  let [initialDate, setInitialDate] = useState();
   let [finalDate, setFinalDate] = useState('');
 
   let [status, setStatus] = useState('');
@@ -167,52 +162,48 @@ export default function MenuDepositsScreen({ navigation }) {
           />
         )}
 
-        <Content>
-          <TouchableOpacity onPress={() => {setInitialDateIsVisible(true)}}>
-            <TextInput
-              onTouchStart={() => {setInitialDateIsVisible(true)}}
-              value={initialDateInput}
-              editable={false}
-              autoCapitalize="none"
-              placeholder="Data inicial"
-              style={styles.input}
-              onChangeText={value => setInitialDate(value)}
-            />
-          </TouchableOpacity>
-
-          <DateTimePicker
-            isVisible={initialDateIsVisible}
-            onConfirm={handleInitialDate}
-            onCancel={resetInitialDate}
+        <View style={dateTimeStyles.dateView}>
+          <DatePicker
+            style={dateTimeStyles.inputDate}
+            date={initialDate}
+            mode="date"
+            placeholder="Data Inicial"
+            format="YYYY-MM-DD"
+            minDate="1990-01-01"
+            confirmBtnText="Confirmar"
+            cancelBtnText="Cancelar"
+            customStyles={{
+              dateIcon: dateTimeStyles.datePickerIcon,
+              dateInput: dateTimeStyles.datePickerInput
+            }}
+            onDateChange={(value) => {setInitialDate(value)}}
           />
 
-          <TouchableOpacity onPress={() => {setFinalDateIsVisible(true)}}>
-            <TextInput
-              onTouchStart={() => {setFinalDateIsVisible(true)}}
-              value={finalDateInput}
-              editable={false}
-              autoCapitalize="none"
-              placeholder="Data final"
-              style={styles.input}
-              onChangeText={value => setFinalDate(value)}
-            />
-          </TouchableOpacity>
-
-          <DateTimePicker
-            isVisible={finalDateIsVisible}
-            onConfirm={handleFinalDate}
-            onCancel={resetFinalDate}
+          <DatePicker
+            style={dateTimeStyles.inputDate}
+            date={finalDate}
+            mode="date"
+            placeholder="Data final"
+            format="YYYY-MM-DD"
+            minDate="1990-01-01"
+            confirmBtnText="Confirmar"
+            cancelBtnText="Cancelar"
+            customStyles={{
+              dateIcon: dateTimeStyles.datePickerIcon,
+              dateInput: dateTimeStyles.datePickerInput
+            }}
+            onDateChange={(value) => {setFinalDate(value)}}
           />
+        </View>
 
-          <Text style={generalStyles.textBlueTitle}>Situação</Text>
-          <Picker
-              style={styles.input}
-              onValueChange={(itemValue, itemIndex) => setStatus(itemValue)}
-              selectedValue={status}>
-              <Picker.Item label="Agendado" value="scheduled" />
-              <Picker.Item label="Completo" value="completed" />
-          </Picker>
-        </Content>
+        <Text style={generalStyles.textBlueTitle}>Situação</Text>
+        <Picker
+            style={styles.input}
+            onValueChange={(itemValue, itemIndex) => setStatus(itemValue)}
+            selectedValue={status}>
+            <Picker.Item label="Agendado" value="scheduled" />
+            <Picker.Item label="Completo" value="completed" />
+        </Picker>
 
         <View style={generalStyles.mainActionsView}>
           <View style={styles.footerButtonContainer}>
