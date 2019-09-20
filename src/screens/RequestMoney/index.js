@@ -4,29 +4,19 @@ import { View, Text, Image, TextInput, TouchableOpacity, Alert, ActivityIndicato
 import { TextInputMask } from 'react-native-masked-text';
 
 import ButtonLinearGradient from '../../components/ButtonLinearGradient';
-import DateTimePicker from "react-native-modal-datetime-picker";
-import moment from "moment";
+import DatePicker from 'react-native-datepicker';
 
 import styles from './styles'
 import generalStyles from '../../generalStyles';
+import dateTimeStyles from '../../dateTimeStyles';
 
 export default function RequestMoneyScreen({ navigation }) {
-  let [isVisiblePickerOne, setIsVisiblePickerOne] = useState(false);
   let [show, setShow] = useState(false);
   let [email, setEmail] = useState('');
   let [name, setName] = useState('');
   let [description, setDescription] = useState('');
-  let [duedateInput, setDuedateInput] = useState('');
   let [duedate, setDuedate] = useState('');
   let [money, setMoney] = useState('');
-
-  handlePickerOne = datetime => {
-    const date = moment(datetime).format("DD/MM/YYYY");
-
-    setIsVisiblePickerOne(false);
-    setDuedateInput(date)
-    setDuedate(date.split("/").reverse().join("-"))
-  };
 
   calcButton = value => {
     setMoney(money+value);
@@ -73,7 +63,7 @@ export default function RequestMoneyScreen({ navigation }) {
     <View style={generalStyles.container}>
       <ScrollView>
 
-        <Text style={generalStyles.textBlueTitle}>Solicite pagamentos na hora e de onde estiver</Text>
+        <Text style={generalStyles.textBlueTitle}>Solicite pagamentos de onde estiver</Text>
         <Image
           source={require("../../images/homeSend/ic_money_send.png")}
           style={styles.iconMenu}
@@ -89,7 +79,7 @@ export default function RequestMoneyScreen({ navigation }) {
         <Text style={generalStyles.textGray}>Você pode solicitar pagamentos por produtos e serviços num piscar de olhos. Tudo o que você precisa é preencher os campos abaixo</Text>
         <Text style={generalStyles.textGray}>Se estiver vendendo produtos ou serviços, você pode estar coberto pela nossa </Text>
         <Text style={generalStyles.textBlueTitle}>Proteção ao Vendedor.</Text>
-        <Text style={generalStyles.textGray}>Digite o email de quem deseja solicitar um pagamento (você pode pagar uma tarifa por esta operação)</Text>
+        <Text style={generalStyles.textGray}>Email de quem deseja solicitar um pagamento (você pode pagar uma tarifa por esta operação)</Text>
 
         <TextInput
           keyboardType="email-address"
@@ -99,7 +89,7 @@ export default function RequestMoneyScreen({ navigation }) {
           onChangeText={value => setEmail({ value })}
         />
 
-        <Text style={generalStyles.textGray}>Digite o nome de quem deseja solicitar um pagamento</Text>
+        <Text style={generalStyles.textGray}>Nome de quem deseja solicitar um pagamento</Text>
         <TextInput
           autoCapitalize="none"
           placeholder="Nome"
@@ -107,26 +97,24 @@ export default function RequestMoneyScreen({ navigation }) {
           onChangeText={value => setName({ value })}
         />
 
-        <Text style={generalStyles.textGray}>Escolha a data de vencimento</Text>
-        <TouchableOpacity onPress={() => {setIsVisiblePickerOne(true)}}>
-          <TextInput
-            onTouchStart={() => {setIsVisiblePickerOne(true)}}
-            value={duedateInput}
-            editable={false}
-            autoCapitalize="none"
-            placeholder="Data de vencimento"
-            style={styles.input}
-            onChangeText={value => setDuedate(value)}
-          />
-        </TouchableOpacity>
+        <Text style={generalStyles.textGray}>Data de vencimento</Text>
 
-        <DateTimePicker
-          isVisible={isVisiblePickerOne}
-          onConfirm={handlePickerOne}
-          onCancel={handlePickerOne}
+        <DatePicker
+          style={dateTimeStyles.inputDate}
+          date={duedate}
+          mode="date"
+          format="YYYY-MM-DD"
+          minDate="1990-01-01"
+          confirmBtnText="Confirmar"
+          cancelBtnText="Cancelar"
+          customStyles={{
+            dateIcon: dateTimeStyles.datePickerIcon,
+            dateInput: dateTimeStyles.datePickerInput
+          }}
+          onDateChange={(value) => {setDuedate(value)}}
         />
 
-        <Text style={generalStyles.textGray}>Digite a descrição do pagamento</Text>
+        <Text style={generalStyles.textGray}>Descrição do pagamento</Text>
         <TextInput
           multiline={true}
           autoCapitalize="none"
@@ -135,7 +123,7 @@ export default function RequestMoneyScreen({ navigation }) {
           onChangeText={value => setDescription(value)}
         />
 
-        <Text style={generalStyles.textGray}>Use nosso teclado para informar o valor do pagamento</Text>
+        <Text style={generalStyles.textGray}>Use o teclado para informar o valor do pagamento</Text>
         <TextInputMask
           editable={false}
           type={"money"}

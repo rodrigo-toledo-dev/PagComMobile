@@ -69,7 +69,7 @@ export default createAppContainer(
     }
   },
   {
-    initialRouteName: 'MenuDeposits',
+    initialRouteName: 'RequestMoney',
     defaultNavigationOptions: {
       headerTitle: <SignedHeader />,
       headerBackTitle: null,

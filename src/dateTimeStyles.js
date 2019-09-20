@@ -17,7 +17,7 @@ export default StyleSheet.create({
     marginRight: 20,
     paddingLeft: 5,
     paddingRight: 5,
-    fontSize: 17
+    fontSize: 17,
   },
 
   datePickerIcon: {
