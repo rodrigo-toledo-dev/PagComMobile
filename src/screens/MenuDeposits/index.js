@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-import { View, Text, Alert, TextInput, TouchableOpacity, ActivityIndicator, ScrollView, FlatList } from 'react-native';
+import { View, Text, Alert, ActivityIndicator, ScrollView, FlatList, Platform } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import { Picker, Content } from "native-base";
+import { Picker } from "native-base";
 
 import DepositListItem from '../../components/DepositListItem';
 import ButtonLinearGradient from '../../components/ButtonLinearGradient';
@@ -197,13 +197,28 @@ export default function MenuDepositsScreen({ navigation }) {
         </View>
 
         <Text style={generalStyles.textBlueTitle}>Situação</Text>
-        <Picker
+        {Platform.OS === 'ios' && (
+          <Picker
             style={styles.input}
             onValueChange={(itemValue, itemIndex) => setStatus(itemValue)}
             selectedValue={status}>
+            <Picker.Item label="Selecione uma situação" value="" />
             <Picker.Item label="Agendado" value="scheduled" />
             <Picker.Item label="Completo" value="completed" />
-        </Picker>
+          </Picker>
+        )}
+
+        {Platform.OS != 'ios' && (
+          <View style={styles.androidSelectInput}>
+            <Picker
+              onValueChange={(itemValue, itemIndex) => setStatus(itemValue)}
+              selectedValue={status}>
+              <Picker.Item label="Selecione uma situação" value="" />
+              <Picker.Item label="Agendado" value="scheduled" />
+              <Picker.Item label="Completo" value="completed" />
+            </Picker>
+          </View>
+        )}
 
         <View style={generalStyles.mainActionsView}>
           <View style={styles.footerButtonContainer}>
