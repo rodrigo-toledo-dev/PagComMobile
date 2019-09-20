@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { View, Text, Alert, ActivityIndicator, ScrollView, FlatList } from 'react-native';
+import { View, Text, Alert, ActivityIndicator, ScrollView, FlatList, Platform } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Picker } from "native-base";
 
@@ -173,7 +173,8 @@ export default function MenuPaymentsScreen({ navigation }) {
         </View>
 
         <Text style={generalStyles.textBlueTitle}>Situação</Text>
-        <Picker
+        {Platform.OS === 'ios' && (
+          <Picker
             style={styles.input}
             onValueChange={(itemValue, itemIndex) => setStatus(itemValue)}
             selectedValue={status}>
@@ -185,7 +186,27 @@ export default function MenuPaymentsScreen({ navigation }) {
             <Picker.Item label="Compensado" value="completed" />
             <Picker.Item label="Estornado" value="refunded" />
             <Picker.Item label="Antecipado" value="anticipated" />
-        </Picker>
+          </Picker>
+        )
+        }
+
+        {Platform.OS != 'ios' && (
+          <View style={styles.androidSelectInput}>
+            <Picker
+              onValueChange={(itemValue, itemIndex) => setStatus(itemValue)}
+              selectedValue={status}>
+              <Picker.Item label="Selecione uma situação" value="" />
+              <Picker.Item label="Aguardando" value="waiting" />
+              <Picker.Item label="Processando" value="processing" />
+              <Picker.Item label="Aprovado" value="approved" />
+              <Picker.Item label="Cancelado" value="cancelled" />
+              <Picker.Item label="Compensado" value="completed" />
+              <Picker.Item label="Estornado" value="refunded" />
+              <Picker.Item label="Antecipado" value="anticipated" />
+            </Picker>
+          </View>
+        )
+        }
 
         <View style={generalStyles.mainActionsView}>
           <View style={styles.footerButtonContainer}>
