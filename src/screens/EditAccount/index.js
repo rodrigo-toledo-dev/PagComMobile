@@ -276,19 +276,18 @@ export default function EditAccount({ navigation }) {
             onChangeText={value => setCpf(value)}
           />
 
-          <RequiredField message="Campo Obrigatório" />
+          <RequiredField message="Campo Obrigatório (Data de Nascimento)" />
           <DatePicker
-            style={generalStyles.datePicker}
+            style={styles.inputDate}
             date={birthday}
             mode="date"
-            placeholder="Data de nascimento"
             format="YYYY-MM-DD"
             minDate="1990-01-01"
             confirmBtnText="Confirmar"
             cancelBtnText="Cancelar"
             customStyles={{
-              dateIcon: generalStyles.datePickerIcon,
-              dateInput: generalStyles.datePickerInput
+              dateIcon: styles.datePickerIcon,
+              dateInput: styles.datePickerInput
             }}
             onDateChange={(value) => {setBirthday(value)}}
           />

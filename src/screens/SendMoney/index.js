@@ -86,7 +86,7 @@ export default function SendMoneyScreen({ navigation }) {
     <View style={generalStyles.container}>
       <ScrollView>
 
-        <Text style={generalStyles.textBlueTitle}>Envie pagamentos na hora e de onde estiver</Text>
+        <Text style={generalStyles.textBlueTitle}>Envie pagamentos de onde estiver</Text>
         <Image
           source={require("../../images/homeSend/ic_money_send.png")}
           style={styles.iconMenu}
@@ -102,7 +102,7 @@ export default function SendMoneyScreen({ navigation }) {
         <Text style={generalStyles.textGray}>Você pode enviar pagamentos por produtos e serviços num piscar de olhos. Tudo o que você precisa é preencher os campos abaixo</Text>
         <Text style={generalStyles.textGray}>Se estiver vendendo produtos ou serviços, você pode estar coberto pela nossa </Text>
         <Text style={generalStyles.textBlueTitle}>Proteção ao Vendedor.</Text>
-        <Text style={generalStyles.textGray}>Digite o email de quem deseja enviar um pagamento (você pode pagar uma tarifa por esta operação)</Text>
+        <Text style={generalStyles.textGray}>Email de quem deseja enviar um pagamento (você pode pagar uma tarifa por esta operação)</Text>
 
         <TextInput
           keyboardType="email-address"
@@ -112,7 +112,7 @@ export default function SendMoneyScreen({ navigation }) {
           onChangeText={value => setEmail({ value })}
         />
 
-        <Text style={generalStyles.textGray}>Use nosso teclado para informar o valor de envio</Text>
+<Text style={generalStyles.textGray}>Use o teclado para informar o valor do pagamento</Text>
         <TextInputMask
           editable={false}
           type={"money"}

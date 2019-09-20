@@ -39,5 +39,35 @@ export default StyleSheet.create({
     borderBottomWidth:1,
     borderBottomColor: '#ccc',
     paddingBottom: 4
-  }
+  },
+
+
+
+
+  inputDate: {
+    flex: 1,
+    height: 60,
+    color: "#808080",
+    borderColor: "#BC8276",
+    borderWidth: 2,
+    marginBottom: 10,
+    paddingLeft: 5,
+    paddingRight: 5,
+    fontSize: 17,
+    justifyContent: 'center'
+  },
+
+  datePickerIcon: {
+    position: 'absolute',
+    left: 0,
+    top: 4,
+    marginLeft: 0
+  },
+
+  datePickerInput: {
+    marginLeft: 36,
+    color: '#808080',
+    fontSize: 17,
+    borderWidth: 0
+  },
 });

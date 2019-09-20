@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-import { KeyboardAvoidingView, Platform, View, Text, ScrollView, Image, TextInput, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
+import { View, Text, ScrollView, Image, TextInput, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import {
-  Picker,
-  Container,
-  Footer,
+  Picker
 } from 'native-base';
 
-import DateTimePicker from 'react-native-modal-datetime-picker';
+import DatePicker from 'react-native-datepicker';
 import moment from 'moment';
 import { TextInputMask } from 'react-native-masked-text';
 import renderIf from '../../functions/renderIf';
@@ -28,7 +26,6 @@ import generalStyles from '../../generalStyles';
 export default function SignUpScreen({ navigation }) {
 
   let [show, setShow] = useState(false);
-  let [isVisiblePickerOne, setIsVisiblePickerOne] = useState(false);
   let [cnpj, setCnpj] = useState('');
   let [razaoSocial, setRazaoSocial] = useState('');
   let [inscricaoEstadual, setInscricaoEstadual] = useState('');
@@ -38,7 +35,6 @@ export default function SignUpScreen({ navigation }) {
   let [email, setEmail] = useState('');
   let [cpf, setCpf] = useState('');
   let [birthday, setBirthday] = useState('1990-01-01');
-  let [dateInput, setDateInput] = useState('01/01/1990');
   let [accountType, setAccountType] = useState('');
   let [street, setStreet] = useState('');
   let [number, setNumber] = useState('');
@@ -50,19 +46,6 @@ export default function SignUpScreen({ navigation }) {
   let [area, setArea] = useState('');
   let [numberPhone, setNumberPhone] = useState('');
 
-  handlePickerOne = (datetime) => {
-    setIsVisiblePickerOne(false);
-    setBirthday(moment(datetime).format('YYYY-MM-DD'));
-    setDateInput(moment(datetime).format('DD/MM/YYYY'))
-  };
-
-  showDatePickerOne = () => {
-    setIsVisiblePickerOne(true);
-  };
-
-  hidePickerOne = () => {
-    setIsVisiblePickerOne(false);
-  };
 
   handleRegister = async () => {
     // ======== integracao idWall
@@ -129,15 +112,6 @@ export default function SignUpScreen({ navigation }) {
     }
   }
 
-
-
-  // useEffect(() => {
-  //   AsyncStorage.getItem('token').then(token =>{
-  //     if(token){
-  //       navigation.navigate('Home');
-  //     }
-  //   })
-  // }, []);
 
   async function loginAttempt(){
     if (email === "") {
@@ -298,18 +272,21 @@ export default function SignUpScreen({ navigation }) {
             onChangeText={value => setCpf(value)}
           />
 
-          <RequiredField message="Campo Obrigatório" />
-          <TouchableOpacity
-            style={[generalStyles.input, generalStyles.requiredInput]}
-            onPress={this.showDatePickerOne}
-          >
-            <TextInput
-              placeholder="Data de nascimento"
-              style={generalStyles.inputDate}
-              value={dateInput}
-              editable={false}
-            />
-          </TouchableOpacity>
+          <RequiredField message="Campo Obrigatório (Data de Nascimento)" />
+          <DatePicker
+            style={styles.inputDate}
+            date={birthday}
+            mode="date"
+            format="YYYY-MM-DD"
+            minDate="1990-01-01"
+            confirmBtnText="Confirmar"
+            cancelBtnText="Cancelar"
+            customStyles={{
+              dateIcon: styles.datePickerIcon,
+              dateInput: styles.datePickerInput
+            }}
+            onDateChange={(value) => {setBirthday(value)}}
+          />
 
           <View style={generalStyles.viewRowInput}>
             <TextInput
@@ -398,13 +375,6 @@ export default function SignUpScreen({ navigation }) {
           />
 
           <ButtonLinearGradient onPress={handleRegister} text='Continuar' />
-          <DateTimePicker
-            mode='date'
-            date={new Date(birthday)}
-            isVisible={isVisiblePickerOne}
-            onConfirm={this.handlePickerOne}
-            onCancel={this.handlePickerOne}
-          />
         </View>
       </ScrollView>
 

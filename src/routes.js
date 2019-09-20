@@ -69,7 +69,7 @@ export default createAppContainer(
     }
   },
   {
-    initialRouteName: 'RequestMoney',
+    initialRouteName: 'Home',
     defaultNavigationOptions: {
       headerTitle: <SignedHeader />,
       headerBackTitle: null,
